@@ -4,7 +4,7 @@
   > header {
     padding: 0 2rem;
   }
-};
+}
 
 .homeMainContent {
   padding: 0 2rem;
@@ -56,7 +56,8 @@
           gap: 0.5rem;
           align-items: center;
 
-          time, span {
+          time,
+          span {
             font-size: 0.875rem;
             text-transform: capitalize;
           }
@@ -77,4 +78,4 @@
       transform: scale(1.03);
     }
   }
-};
+}

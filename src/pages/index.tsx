@@ -35,7 +35,10 @@ interface HomeProps {
   preview: boolean;
 }
 
-export default function Home({ postsPagination, preview }: HomeProps): JSX.Element {
+export default function Home({
+  postsPagination,
+  preview,
+}: HomeProps): JSX.Element {
   const { next_page, results } = postsPagination;
 
   const [posts, setPosts] = useState(() => results);
@@ -118,10 +121,10 @@ export default function Home({ postsPagination, preview }: HomeProps): JSX.Eleme
   );
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async ({ 
+export const getStaticProps: GetStaticProps<HomeProps> = async ({
   previewData,
-  preview = false
- }) => {
+  preview = false,
+}) => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query(
     [Prismic.Predicates.at('document.type', 'posts')],
@@ -129,7 +132,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async ({
       fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
       pageSize: 5,
       ref: previewData?.ref ?? null,
-    }
+    },
   );
 
   const posts = postsResponse.results.map(post => ({

@@ -48,11 +48,11 @@ interface PostProps {
   preview: boolean;
 }
 
-export default function Post({ 
-  post, 
-  previousPost, 
+export default function Post({
+  post,
+  previousPost,
   nextPost,
-  preview 
+  preview,
 }: PostProps): JSX.Element {
   const { isFallback } = useRouter();
 
@@ -60,7 +60,7 @@ export default function Post({
   const wordsCount = post.data.content.reduce((totalWords, currentContent) => {
     const totalHeadingWords = currentContent.heading.split(' ').length;
     const totalBodyWords = RichText.asText(currentContent.body).split(
-      ' '
+      ' ',
     ).length;
     const totalContentWords = totalHeadingWords + totalBodyWords;
 
@@ -68,7 +68,10 @@ export default function Post({
   }, 0);
   const timeToReadPost = Math.ceil(wordsCount / wordsPerMinute);
   const formattedPublicationDate = dateFormatter(post.first_publication_date);
-  const formattedEditionDate = dateFormatter(post.last_publication_date, "dd MMM yyyy, 'às' HH:mm");
+  const formattedEditionDate = dateFormatter(
+    post.last_publication_date,
+    "dd MMM yyyy, 'às' HH:mm",
+  );
 
   if (isFallback) {
     return <p>Carregando...</p>;
@@ -135,7 +138,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     [Prismic.predicates.at('document.type', 'posts')],
     {
       pageSize: 100,
-    }
+    },
   );
 
   const paths = posts.results.map(post => ({
@@ -150,10 +153,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<PostProps> = async ({ 
-  params, 
-  preview = false, 
-  previewData 
+export const getStaticProps: GetStaticProps<PostProps> = async ({
+  params,
+  preview = false,
+  previewData,
 }) => {
   const { slug } = params;
 
@@ -184,7 +187,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
       pageSize: 1,
       after: currentResponse?.id,
       orderings: '[document.first_publication_date]',
-    }
+    },
   );
   const previousResponse = await prismic.query(
     Prismic.predicates.at('document.type', 'posts'),
@@ -192,17 +195,21 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
       pageSize: 1,
       after: currentResponse?.id,
       orderings: '[document.first_publication_date desc]',
-    }
+    },
   );
 
-  const nextPost = nextResponse.results[0] ? {
-    uid: nextResponse.results[0].uid,
-    title: nextResponse.results[0].data.title,
-  } : null;
-  const previousPost = previousResponse.results[0] ? {
-    uid: previousResponse.results[0].uid,
-    title: previousResponse.results[0].data.title,
-  } : null;
+  const nextPost = nextResponse.results[0]
+    ? {
+        uid: nextResponse.results[0].uid,
+        title: nextResponse.results[0].data?.title,
+      }
+    : null;
+  const previousPost = previousResponse.results[0]
+    ? {
+        uid: previousResponse.results[0].uid,
+        title: previousResponse.results[0].data?.title,
+      }
+    : null;
 
   return {
     props: {

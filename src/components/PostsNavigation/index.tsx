@@ -12,7 +12,10 @@ interface PostsNavigationProps {
   nextPost: Post;
 }
 
-export default function PostsNavigation({ previousPost, nextPost }: PostsNavigationProps): JSX.Element {
+export default function PostsNavigation({
+  previousPost,
+  nextPost,
+}: PostsNavigationProps): JSX.Element {
   if (!previousPost && !nextPost) {
     return null;
   }
@@ -37,4 +40,4 @@ export default function PostsNavigation({ previousPost, nextPost }: PostsNavigat
       )}
     </section>
   );
-};
+}

@@ -19,8 +19,8 @@ function linkResolver(document: Document): string {
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const { token: ref, documentId } = request.query as RequestQuery;
   const redirectUrl = await getPrismicClient(request)
-  .getPreviewResolver(ref, documentId)
-  .resolve(linkResolver, '/');
+    .getPreviewResolver(ref, documentId)
+    .resolve(linkResolver, '/');
 
   if (!redirectUrl) {
     return response.status(401).json({ message: 'Invalid token' });
@@ -33,7 +33,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     <!DOCTYPE html><html><head><meta http-equiv="Refresh" content="0; url=${redirectUrl}" />
     <script>window.location.href = '${redirectUrl}'</script>
     </head>
-    `
+    `,
   );
   response.end();
-}
+};
