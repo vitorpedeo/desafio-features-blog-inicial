@@ -19,6 +19,7 @@ import styles from './post.module.scss';
 
 interface Post {
   first_publication_date: string | null;
+  last_publication_date: string | null;
   data: {
     title: string;
     banner: {
@@ -54,6 +55,7 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
   }, 0);
   const timeToReadPost = Math.ceil(wordsCount / wordsPerMinute);
   const formattedPublicationDate = dateFormatter(post.first_publication_date);
+  const formattedEditionDate = dateFormatter(post.last_publication_date, "dd MMM yyyy, 'às' HH:mm");
 
   if (isFallback) {
     return <p>Carregando...</p>;
@@ -88,6 +90,10 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
             <span>{timeToReadPost} min</span>
           </p>
         </div>
+
+        <p>
+          <i>* editado em {formattedEditionDate}</i>
+        </p>
 
         <section className={styles.contentSection}>
           {post.data.content.map(item => (
@@ -144,6 +150,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({
   const post = {
     uid: response.uid,
     first_publication_date: response.first_publication_date,
+    last_publication_date: response.last_publication_date,
     data: {
       title: response.data.title,
       subtitle: response.data.subtitle,

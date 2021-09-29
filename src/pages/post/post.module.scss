@@ -15,6 +15,7 @@
   }
 
   > div {
+    margin-bottom: 1rem;
     color: var(--info-text);
 
     display: flex;
@@ -31,6 +32,10 @@
         text-transform: capitalize;
       }
     }
+  }
+
+  > p {
+    color: var(--info-text);
   }
 }
 
