@@ -12,6 +12,7 @@ import { dateFormatter } from '../../utils/formaters';
 
 import Header from '../../components/Header';
 import Comments from '../../components/Comments';
+import ExitPreview from '../../components/ExitPreview';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
@@ -35,9 +36,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   const { isFallback } = useRouter();
 
   const wordsPerMinute = 200;
@@ -51,7 +53,6 @@ export default function Post({ post }: PostProps): JSX.Element {
     return totalWords + totalContentWords;
   }, 0);
   const timeToReadPost = Math.ceil(wordsCount / wordsPerMinute);
-
   const formattedPublicationDate = dateFormatter(post.first_publication_date);
 
   if (isFallback) {
@@ -98,9 +99,11 @@ export default function Post({ post }: PostProps): JSX.Element {
             </Fragment>
           ))}
         </section>
-      </main>
 
-      <Comments />
+        <Comments />
+
+        {preview && <ExitPreview />}
+      </main>
     </>
   );
 }
@@ -126,11 +129,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<PostProps> = async ({ 
+  params, 
+  preview = false, 
+  previewData 
+}) => {
   const { slug } = params;
 
   const prismic = getPrismicClient();
-  const response = await prismic.getByUID('posts', String(slug), {});
+  const response = await prismic.getByUID('posts', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
 
   const post = {
     uid: response.uid,
@@ -149,6 +158,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       post,
+      preview,
     },
   };
 };
