@@ -9,10 +9,10 @@
 </p>
 
 <h3 align="center">
-  Desafio 05 - Trilha ReactJS
+  Desafio 06 - Trilha ReactJS
 </h2>
 <p align="center">
-	Resolução do Desafio "Criando um projeto do zero"
+	Resolução do Desafio "Adicionando features ao blog"
 </p>
 
 ## Sobre o desafio
@@ -23,17 +23,16 @@
 
 Nesse desafio, você deverá criar uma aplicação para treinar o que aprendeu até agora no ReactJS
 
-Essa será uma aplicação onde o seu principal objetivo é criar um blog do zero. Você vai receber uma aplicação praticamente em branco que deve consumir os dados do Prismic e ter a interface implementada conforme o layout do Figma. Você terá acesso a diversos arquivos para implementar:
+Essa será uma aplicação onde o seu principal objetivo é adicionar features a um projeto já existente. Utilizaremos como base a solução desenvolvida por você do desafio obrigatório:
 
-- Estilizações global, comun e individuais;
-- Importação de fontes Google;
-- Paginação de posts;
-- Cálculo de tempo estimado de leitura do post;
-- Geração de páginas estáticas com os métodos `getStaticProps` e `getStaticPaths`;
-- Formatação de datas com `date-fns`;
-- Uso de ícones com `react-icons`;
-- Requisições HTTP com `fetch`;
-- Entre outros.
+[Desafio - Criando um projeto do zero](https://github.com/vitorpedeo/desafio-blog-inicial) 
+
+Você deve implementar no projeto as seguintes features:
+
+- Comentários com Utteranc;
+- Preview do documento Prismic;
+- Navegação entre post anterior e próximo;
+- Informação de edição do post.
 
 ## Status do desafio
 
